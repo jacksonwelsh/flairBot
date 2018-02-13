@@ -10,4 +10,4 @@ Currently, the bot is able to:
 * Flair posts based on the score of the comment
 * Report posts based on the score of that comment
 * Remove posts that receive high numbers of upvotes and haven't been approved.
-* log all actions in a separate text file.
+* Log all actions in a separate text file.
