@@ -1,0 +1,7 @@
+*.ini
+testDiscord.py
+*.txt
+kdapi/
+._testDiscord.py
+.*
+!/.gitignore
