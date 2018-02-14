@@ -55,13 +55,20 @@ for c in r.redditor('murderedbybots').saved():
     if c.stickied != True: c.delete(); continue
     if c.author != 'murderedbybots': continue
     if c.parent().author == '[deleted]': c.delete(); continue
+
     if c.score > murderScore:
-        if c.parent().flair != 'Murder': c.parent().mod.flair(text='Murder'); f.write('\nFlaired post ' + c.parent().permalink + ' as Murder')
-        if c.body != murderComment: c.edit(murderComment)
+        if c.body != murderComment:
+            c.edit(murderComment)
+            c.parent().mod.flair(text='Murder')
+            f.write('\nFlaired post ' + c.parent().permalink + ' as Murder')
         if c.score > clearComment: c.delete()
+
     elif c.score < burnScore:
-        if c.parent().flair != 'Burn': c.parent().mod.flair(text='Burn'); f.write('\nFlaired post ' + c.parent().permalink + ' as Burn')
-        if c.body != burnComment: c.edit(burnComment)
+        if c.body != burnComment: 
+            c.edit(burnComment)
+            c.parent().mod.flair(text='Burn');
+            f.write('\nFlaired post ' + c.parent().permalink + ' as Burn')
+
         if c.score < modAlert:
             #--- temporarily disabled modmail feature because it was blowing up and annoying ---#
             # r.subreddit('MurderedByWords').message('Possible LQ content alert', 'The following post has been marked as a burn with a *very* low score.\n\nPlease investigate at your convenience.\n\n' + c.parent().permalink)
