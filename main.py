@@ -39,7 +39,7 @@ for p in r.subreddit('MurderedByWords').new():
 #--- check for unapproved posts ---#
 for u in r.subreddit('MurderedByWords').mod.unmoderated():
     if u.score > 5000:
-        tempRemovalMessage = 'Greetings, '+str(u.author)+'! Your [post]('+u.permalink+') on /r/MurderedByWords has been temporarily removed so a moderator can review it. This prevents low quality content from making the frontpage.\n\nThe moderators have been notified of this action, and will reinstate your post if it belongs here. You will receive a reply regardless of the decision.\n\nIf you have any questions, please [send the moderators a message](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=Question+about+the+temporary+removal+of+a+post&message= '+u.permalink+') **do not send me a message, because I am a bot.**'
+        tempRemovalMessage = 'Greetings, /u/'+str(u.author)+'! Your [post]('+u.permalink+') on /r/MurderedByWords has been temporarily removed so a moderator can review it. This prevents low quality content from making the frontpage.\n\nThe moderators have been notified of this action, and will reinstate your post if it belongs here. You will receive a reply regardless of the decision.\n\nIf you have any questions, please [send the moderators a message](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=Question+about+the+temporary+removal+of+a+post&message= '+u.permalink+') \n\n**Do not send this account a message; it is a bot.** If you want, you can also send the moderators a message in the [MBW discord](https://discord.gg/rEvkEhD)'
         r.subreddit('MurderedByWords').modmail.create('Post temporarily removed', tempRemovalMessage, str(u.author))
         c = u.reply(tempRemovalMessage)
         c.mod.distinguish(how='yes', sticky=True)
@@ -64,7 +64,7 @@ for c in r.redditor('murderedbybots').saved():
         if c.score > clearComment: c.delete()
 
     elif c.score < burnScore:
-        if c.body != burnComment: 
+        if c.body != burnComment:
             c.edit(burnComment)
             c.parent().mod.flair(text='Burn');
             f.write('\nFlaired post ' + c.parent().permalink + ' as Burn')
