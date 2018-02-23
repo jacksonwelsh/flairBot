@@ -15,6 +15,7 @@ clearComment = 60
 commentText = '''**Please help us decide if this is a murder or a burn.** \n\nIf you believe this post is a murder, please upvote *this comment*. \n\nIf you believe this post is a burn, please downvote *this comment*. \n\nIf you believe this post does not belong on this sub, please downvote *the parent post.* and report it if you think the mods need to see it.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=)*\n\n'''
 burnComment = commentText + '\n\nThis post has successfully been marked as a `Burn`. This *can* still change, depending on votes.'
 murderComment = commentText + '\n\nThis post has successfully been marked as a `Murder`. This *can* still change, depending on votes.'
+contentBanText = '#Be advised, if this post has content relating to nra/guns/school shooting you will be banned for 14 days.  \nPlease remove your post if it falls into these categories and no action will be taken. :)'
 
 f = open("logfile.txt", "a+")
 #--- comment on new posts, hide from /new ---#
@@ -22,7 +23,7 @@ for p in r.subreddit('MurderedByWords').new():
     if time.time() - p.created_utc > 86400: break
    # linktitle = p.title.lower()
    # if any(string in linktitle for string in poltags): p.mod.flair(text='pol')
-    c = p.reply(commentText)
+    c = p.reply(commentText + "\n---\n" + contentBanText)
     c.mod.distinguish(how='yes', sticky=True)
     c.save()
 #--- kd module not working yet ---#
