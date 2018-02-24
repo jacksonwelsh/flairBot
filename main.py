@@ -10,8 +10,8 @@ r = praw.Reddit('murderedbybots', user_agent="beta v5.2, orange")
 
 murderScore = 30
 burnScore = -30
-modAlert = -50
-clearComment = 60
+modAlert = -80
+clearComment = 80
 commentText = '''**Please help us decide if this is a murder or a burn.** \n\nIf you believe this post is a murder, please upvote *this comment*. \n\nIf you believe this post is a burn, please downvote *this comment*. \n\nIf you believe this post does not belong on this sub, please downvote *the parent post.* and report it if you think the mods need to see it.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=)*\n\n'''
 burnComment = commentText + '\n\nThis post has successfully been marked as a `Burn`. This *can* still change, depending on votes.'
 murderComment = commentText + '\n\nThis post has successfully been marked as a `Murder`. This *can* still change, depending on votes.'
