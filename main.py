@@ -26,7 +26,7 @@ footer = "\n\n---\nIf you want to talk about the subreddit, feel free to send us
 f = open("logfile.txt", "a+")
 #--- comment on new posts, hide from /new ---#
 for p in r.subreddit('MurderedByWords').new():
-    actionID = uniqID()
+    actionID = uniqid()
     if time.time() - p.created_utc > 86400: break
    # linktitle = p.title.lower()
    # if any(string in linktitle for string in poltags): p.mod.flair(text='pol')
@@ -59,7 +59,7 @@ for u in r.subreddit('MurderedByWords').mod.unmoderated():
 time.sleep(10)
 #--- Sort through previously made comments, flair/edit accordingly. ---#
 for c in r.redditor('murderedbybots').saved():
-    actionID = uniqID()
+    actionID = uniqid()
     print(c.parent().permalink)
     if time.time() - c.created_utc > 423000: c.parent().mod.flair(text="Burn"); c.delete(); continue
     if c.stickied != True: c.delete(); continue
