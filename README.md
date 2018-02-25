@@ -11,3 +11,7 @@ Currently, the bot is able to:
 * Report posts based on the score of that comment
 * Remove posts that receive high numbers of upvotes and haven't been approved.
 * Log all actions in a separate text file.
+
+##faq
+
+There is currently a short FAQ hosted [here](https://www.reddit.com/r/1442dump/wiki/murderedbybots-faq)
