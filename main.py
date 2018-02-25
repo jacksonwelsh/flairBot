@@ -9,6 +9,7 @@ r = praw.Reddit('murderedbybots', user_agent="beta v5.2, orange")
 # poltags = ['[pol]', '[political]', '[politics]', '[politician]']
 
 def uniqid():
+    from time import time
     return hex(int(time()*10000000))[2:]
 
 
@@ -16,11 +17,11 @@ murderScore = 30
 burnScore = -30
 modAlert = -80
 clearComment = 80
-commentText = '''**Please help us decide if this is a murder or a burn.**  \nIf you believe this post is a murder, please upvote *this comment*.  \nIf you believe this post is a burn, please downvote *this comment*. \n\nIf you believe this post does not belong on this sub, please downvote *the parent post.* and report it if you think the mods need to see it.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=)*\n\n'''
+commentText = '''**Please help us decide if this is a murder or a burn.**  \nIf you believe this post is a murder, please upvote *this comment*.  \nIf you believe this post is a burn, please downvote *this comment*. \n\nIf you believe this post does not belong on this sub, please downvote *the parent post.* and report it if you think the mods need to see it.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=Please include the action number for reference.)*\n\n'''
 burnComment = commentText + '\n\nThis post has successfully been marked as a `Burn`. This *can* still change, depending on votes.'
 murderComment = commentText + '\n\nThis post has successfully been marked as a `Murder`. This *can* still change, depending on votes.'
 contentBanText = '#Be advised, if this post has content relating to nra/guns/school shooting you will be banned for 14 days.  \nPlease remove your post if it falls into these categories and no action will be taken. :)'
-footer = "\n\n---\nIf you want to talk about the subreddit, feel free to send us a message in [our official Discord server](https://discord.gg/Fe3eUb6)!\n\n^^[faq](https://www.reddit.com/r/1442dump/wiki/murderedbybots-faq) ^^[source](https://github.com/jackson1442/redditBot) ^^action ^^#"
+footer = "\n\n---\nIf you want to talk about the subreddit, feel free to send us a message in [our official Discord server](https://discord.gg/Fe3eUb6)!\n\n^[faq](https://www.reddit.com/r/1442dump/wiki/murderedbybots-faq) | ^[source](https://github.com/jackson1442/redditBot) | ^action ^#"
 
 
 f = open("logfile.txt", "a+")
@@ -48,7 +49,7 @@ for p in r.subreddit('MurderedByWords').new():
 for u in r.subreddit('MurderedByWords').mod.unmoderated():
     if u.score > 5000:
         actionID = uniqid()
-        tempRemovalMessage = 'Greetings, /u/'+str(u.author)+'! Your [post]('+u.permalink+') on /r/MurderedByWords has been temporarily removed so a moderator can review it. This prevents low quality content from making the frontpage.\n\nThe moderators have been notified of this action, and will reinstate your post if it belongs here. You will receive a reply regardless of the decision.\n\nIf you have any questions, please [send the moderators a message](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=Question+about+the+temporary+removal+of+a+post&message= '+u.permalink+') \n\n**Do not send this account a message; it is a bot.**'
+        tempRemovalMessage = 'Greetings, /u/'+str(u.author)+'! Your [post]('+u.permalink+') on /r/MurderedByWords has been temporarily removed so a moderator can review it. This prevents low quality content from making the frontpage.\n\nThe moderators have been notified of this action, and will reinstate your post if it belongs here. You will receive a reply regardless of the decision.\n\nIf you have any questions, please [send the moderators a message](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=Question+about+the+temporary+removal+of+a+post&message= '+u.permalink+'  \n' + actionID +') \n\n**Do not send this account a message; it is a bot.**'
         r.subreddit('MurderedByWords').modmail.create('Post temporarily removed', tempRemovalMessage + footer + actionID, str(u.author))
         c = u.reply(tempRemovalMessage + footer + actionID)
         c.mod.distinguish(how='yes', sticky=True)
