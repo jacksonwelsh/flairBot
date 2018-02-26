@@ -60,6 +60,8 @@ for u in r.subreddit('MurderedByWords').mod.unmoderated():
 time.sleep(10)
 #--- Sort through previously made comments, flair/edit accordingly. ---#
 for c in r.redditor('murderedbybots').saved():
+    currentComment = c.body[:-15]
+    print(currentComment)
     actionID = uniqid()
     print(c.parent().permalink)
     if time.time() - c.created_utc > 423000: c.parent().mod.flair(text="Burn"); c.delete(); continue
@@ -68,14 +70,14 @@ for c in r.redditor('murderedbybots').saved():
     if c.parent().author == '[deleted]': c.delete(); continue
 
     if c.score > murderScore:
-        if c.body != murderComment + footer:
+        if currentComment != murderComment + footer:
             c.edit(murderComment + footer + actionID)
             c.parent().mod.flair(text='Murder')
             f.write('\nFlaired post ' + c.parent().permalink + ' as Murder - ' + actionID)
         if c.score > clearComment: c.delete()
 
     elif c.score < burnScore:
-        if c.body != burnComment + footer:
+        if currentComment != burnComment + footer:
             c.edit(burnComment + footer + actionID)
             c.parent().mod.flair(text='Burn');
             f.write('\nFlaired post ' + c.parent().permalink + ' as Burn - ' + actionID)
