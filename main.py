@@ -28,10 +28,12 @@ f = open("logfile.txt", "a+")
 #--- comment on new posts, hide from /new ---#
 for p in r.subreddit('MurderedByWords').new():
     actionID = uniqid()
+    lp = r.subreddit('murderedbylogs').submit(actionID + ' - Commented on post "' + p.title + '"', url='https://reddit.com' + p.permalink)
+    lp.mod.lock()
     if time.time() - p.created_utc > 86400: break
    # linktitle = p.title.lower()
    # if any(string in linktitle for string in poltags): p.mod.flair(text='pol')
-    c = p.reply(commentText + "\n---\n" + contentBanText + footer + actionID)
+    c = p.reply(commentText + "\n---\n" + contentBanText + footer + '['+actionID+']('+lp.permalink+')')
     c.mod.distinguish(how='yes', sticky=True)
     c.save()
 #--- kd module not working yet ---#
@@ -45,20 +47,20 @@ for p in r.subreddit('MurderedByWords').new():
     print('Commented on post id ' + p.id)
     f.write('\nCommented on post ' + p.permalink + ' - ' + actionID)
     c.clear_vote()
-    r.subreddit('murderedbylogs').submit(actionID + ' - Commented on post "' + p.title + '"', url='https://reddit.com' + c.permalink).mod.lock()
 #--- check for unapproved posts ---#
 for u in r.subreddit('MurderedByWords').mod.unmoderated():
     if u.score > 5000:
         actionID = uniqid()
+        lp = r.subreddit('murderedbylogs').submit(actionID + ' - Temporarily removed post "' + u.title + '"', url='https://reddit.com' + u.permalink)
+        lp.mod.lock()
         tempRemovalMessage = 'Greetings, /u/'+str(u.author)+'! Your [post]('+u.permalink+') on /r/MurderedByWords has been temporarily removed so a moderator can review it. This prevents low quality content from making the frontpage.\n\nThe moderators have been notified of this action, and will reinstate your post if it belongs here. You will receive a reply regardless of the decision.\n\nIf you have any questions, please [send the moderators a message](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=Question+about+the+temporary+removal+of+a+post&message= '+u.permalink+'  \n' + actionID +') \n\n**Do not send this account a message; it is a bot.**'
-        r.subreddit('MurderedByWords').modmail.create('Post temporarily removed', tempRemovalMessage + footer + actionID, str(u.author))
-        c = u.reply(tempRemovalMessage + footer + actionID)
+        r.subreddit('MurderedByWords').modmail.create('Post temporarily removed', tempRemovalMessage + footer + '['+actionID+']('+lp.permalink+')', str(u.author))
+        c = u.reply(tempRemovalMessage + footer + '['+actionID+']('+lp.permalink+')')
         c.mod.distinguish(how='yes', sticky=True)
         u.mod.remove()
         u.report("Temporarily removed due to upvotes with no approval. Please verify.")
         print('temporarily removed post ' + u.permalink)
         f.write('\nRemoved post ' + u.permalink + ' temporarily for review - ' + actionID)
-        r.subreddit('murderedbylogs').submit(actionID + ' - Temporarily removed post "' + u.title + '"', url='https://reddit.com' + c.permalink).mod.lock()
 
 time.sleep(10)
 #--- Sort through previously made comments, flair/edit accordingly. ---#
@@ -77,19 +79,21 @@ for c in r.redditor('murderedbybots').saved():
 
     if c.score > murderScore:
         if currentComment != murderComment + footer:
-            c.edit(murderComment + footer + actionID)
+            lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title + '" as murder', url='https://reddit.com' + c.parent().permalink)
+            lp.mod.lock()
+            c.edit(murderComment + footer + '['+actionID+']('+lp.permalink+')')
             c.parent().mod.flair(text='Murder')
             f.write('\nFlaired post ' + c.parent().permalink + ' as Murder - ' + actionID)
-            r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title + '" as murder', url='https://reddit.com' + c.permalink).mod.lock()
 
         if c.score > clearComment: c.delete()
 
     elif c.score < burnScore:
         if currentComment != burnComment + footer:
-            c.edit(burnComment + footer + actionID)
+            lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title + '" as burn', url='https://reddit.com' + c.parent().permalink)
+            lp.mod.lock()
+            c.edit(burnComment + footer + '['+actionID+']('+lp.permalink+')')
             c.parent().mod.flair(text='Burn');
             f.write('\nFlaired post ' + c.parent().permalink + ' as Burn - ' + actionID)
-            r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title + '" as burn', url='https://reddit.com' + c.permalink).mod.lock()
 
 
         if c.score < modAlert:
@@ -97,8 +101,7 @@ for c in r.redditor('murderedbybots').saved():
             # r.subreddit('MurderedByWords').message('Possible LQ content alert', 'The following post has been marked as a burn with a *very* low score.\n\nPlease investigate at your convenience.\n\n' + c.parent().permalink)
             c.parent().report("Potential low quality content, overwhelmingly voted as burn. - " + actionID)
             f.write('\nReported post ' + c.parent().permalink + ' as potential low quality - ' + actionID)
-            r.subreddit('murderedbylogs').submit(actionID + ' - Reported post "' + c.parent().title + '" as potential LQ', url='https://reddit.com' + c.permalink).mod.lock()
-
+            r.subreddit('murderedbylogs').submit(actionID + ' - Reported post "' + c.parent().title + '" as potential LQ', url='https://reddit.com' + c.parent().permalink).mod.lock()
             c.delete()
     else: continue
     print(c.parent().permalink)
