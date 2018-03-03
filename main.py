@@ -53,6 +53,7 @@ for u in r.subreddit('MurderedByWords').mod.unmoderated():
         actionID = uniqid()
         lp = r.subreddit('murderedbylogs').submit(actionID + ' - Temporarily removed post "' + u.title[:50] + '"', url='https://reddit.com' + u.permalink)
         lp.mod.lock()
+        lp.mod.approve()
         tempRemovalMessage = 'Greetings, /u/'+str(u.author)+'! Your [post]('+u.permalink+') on /r/MurderedByWords has been temporarily removed so a moderator can review it. This prevents low quality content from making the frontpage.\n\nThe moderators have been notified of this action, and will reinstate your post if it belongs here. You will receive a reply regardless of the decision.\n\nIf you have any questions, please [send the moderators a message](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=Question+about+the+temporary+removal+of+a+post&message= '+u.permalink+'  \n' + actionID +') \n\n**Do not send this account a message; it is a bot.**'
         r.subreddit('MurderedByWords').modmail.create('Post temporarily removed', tempRemovalMessage + footer + '['+actionID+']('+lp.permalink+')', str(u.author))
         c = u.reply(tempRemovalMessage + footer + '['+actionID+']('+lp.permalink+')')
