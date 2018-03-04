@@ -47,13 +47,13 @@ for p in r.subreddit('MurderedByWords').new():
     print('Commented on post id ' + p.id)
     f.write('\nCommented on post ' + p.permalink + ' - ' + actionID)
     c.clear_vote()
+    lp.mod.approve()
 #--- check for unapproved posts ---#
 for u in r.subreddit('MurderedByWords').mod.unmoderated():
     if u.score > 5000:
         actionID = uniqid()
         lp = r.subreddit('murderedbylogs').submit(actionID + ' - Temporarily removed post "' + u.title[:50] + '"', url='https://reddit.com' + u.permalink)
         lp.mod.lock()
-        lp.mod.approve()
         tempRemovalMessage = 'Greetings, /u/'+str(u.author)+'! Your [post]('+u.permalink+') on /r/MurderedByWords has been temporarily removed so a moderator can review it. This prevents low quality content from making the frontpage.\n\nThe moderators have been notified of this action, and will reinstate your post if it belongs here. You will receive a reply regardless of the decision.\n\nIf you have any questions, please [send the moderators a message](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=Question+about+the+temporary+removal+of+a+post&message= '+u.permalink+'  \n' + actionID +') \n\n**Do not send this account a message; it is a bot.**'
         r.subreddit('MurderedByWords').modmail.create('Post temporarily removed', tempRemovalMessage + footer + '['+actionID+']('+lp.permalink+')', str(u.author))
         c = u.reply(tempRemovalMessage + footer + '['+actionID+']('+lp.permalink+')')
@@ -62,6 +62,7 @@ for u in r.subreddit('MurderedByWords').mod.unmoderated():
         u.report("Temporarily removed due to upvotes with no approval. Please verify.")
         print('temporarily removed post ' + u.permalink)
         f.write('\nRemoved post ' + u.permalink + ' temporarily for review - ' + actionID)
+        lp.mod.approve()
 
 time.sleep(10)
 #--- Sort through previously made comments, flair/edit accordingly. ---#
@@ -85,6 +86,7 @@ for c in r.redditor('murderedbybots').saved():
             c.edit(murderComment + footer + '['+actionID+']('+lp.permalink+')')
             c.parent().mod.flair(text='Murder')
             f.write('\nFlaired post ' + c.parent().permalink + ' as Murder - ' + actionID)
+            lp.mod.approve()
 
         if c.score > clearComment: c.delete()
 
@@ -95,7 +97,7 @@ for c in r.redditor('murderedbybots').saved():
             c.edit(burnComment + footer + '['+actionID+']('+lp.permalink+')')
             c.parent().mod.flair(text='Burn');
             f.write('\nFlaired post ' + c.parent().permalink + ' as Burn - ' + actionID)
-
+            lp.mod.approve()
 
         if c.score < modAlert:
             #--- temporarily disabled modmail feature because it was blowing up and annoying ---#
