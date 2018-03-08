@@ -69,7 +69,7 @@ for u in r.subreddit('MurderedByWords').mod.unmoderated():
 time.sleep(10)
 #--- Sort through previously made comments, flair/edit accordingly. ---#
 for c in r.redditor('murderedbybots').saved():
-    currentComment = c.body[:-15]
+    currentComment = c.body.split('#')[0]
     print currentComment
     actionID = uniqid()
     print(c.parent().permalink)
@@ -83,7 +83,7 @@ for c in r.redditor('murderedbybots').saved():
     if c.parent().author == '[deleted]': c.delete(); continue
 
     if c.score > murderScore:
-        if currentComment != murderComment + footer:
+        if currentComment != murderComment + footer[-1]:
             lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '" as murder', url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
             c.edit(murderComment + specialNotice + footer + '['+actionID+']('+lp.permalink+')')
@@ -94,7 +94,7 @@ for c in r.redditor('murderedbybots').saved():
         if c.score > clearComment: c.delete()
 
     elif c.score < burnScore:
-        if currentComment != burnComment + footer:
+        if currentComment != burnComment + footer[-1]:
             lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '" as burn', url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
             c.edit(burnComment + specialNotice + footer + '['+actionID+']('+lp.permalink+')')
