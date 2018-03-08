@@ -84,7 +84,7 @@ for c in r.redditor('murderedbybots').saved():
             lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '" as murder', url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
             c.edit(murderComment + footer + '['+actionID+']('+lp.permalink+')')
-            c.parent().mod.flair(text='Murder')
+            c.parent().mod.flair(text='Murder', css_class='murder')
             f.write('\nFlaired post ' + c.parent().permalink + ' as Murder - ' + actionID)
             lp.mod.approve()
 
@@ -95,7 +95,7 @@ for c in r.redditor('murderedbybots').saved():
             lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '" as burn', url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
             c.edit(burnComment + footer + '['+actionID+']('+lp.permalink+')')
-            c.parent().mod.flair(text='Burn');
+            c.parent().mod.flair(text='Burn', css_class='burn');
             f.write('\nFlaired post ' + c.parent().permalink + ' as Burn - ' + actionID)
             lp.mod.approve()
 
