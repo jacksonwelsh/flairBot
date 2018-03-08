@@ -2,27 +2,29 @@
 # You are free to use any or all of the content of this bot for your own
 # pursposes. You are not required to attrubite this work to me. See more cool
 # stuff with extremely specific applications at github.com/jackson1442
-
 import praw, time
 # import kdapi
 r = praw.Reddit('murderedbybots', user_agent="beta v5.2, orange")
 # poltags = ['[pol]', '[political]', '[politics]', '[politician]']
 
 def uniqid():
-    from time import time
-    return hex(int(time()*10000000))[2:17]
+    return hex(int(time.time()*10000000))[2:17]
 
 
 murderScore = 30
 burnScore = -30
 modAlert = -80
 clearComment = 80
-commentText = '''**Please help us decide if this is a murder or a burn.**  \nIf you believe this post is a murder, please upvote *this comment*.  \nIf you believe this post is a burn, please downvote *this comment*. \n\nIf you believe this post does not belong on this sub, please downvote *the parent post.* and report it if you think the mods need to see it.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=Please include the action number for reference.)*\n\n'''
+commentText = '''**Upvote this comment if the post is a **Murder**. Downvote this comment if it is a **Burn**.\n\nIf this post needs moderator attention, please report this post.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=Please include the action number for reference.)*\n\n'''
 burnComment = commentText + '\n\nThis post has successfully been marked as a `Burn`. This *can* still change, depending on votes.'
 murderComment = commentText + '\n\nThis post has successfully been marked as a `Murder`. This *can* still change, depending on votes.'
 # contentBanText = '#Be advised, if this post has content relating to nra/guns/school shooting you will be banned for 14 days.  \nPlease remove your post if it falls into these categories and no action will be taken. :)'
 footer = "\n\n---\nIf you want to talk about the subreddit, feel free to send us a message in [our official Discord server](https://discord.gg/Fe3eUb6)!\n\n^[faq](https://www.reddit.com/r/1442dump/wiki/murderedbybots-faq) ^| ^[source](https://github.com/jackson1442/redditBot) ^| ^action ^#"
 
+if time.time() < 1520812799:
+    specialNotice = "\n---\nWe are currently accepting applications for moderators. Please see [this announcement](https://redd.it/82u13q) for more details!"
+else:
+    specialNotice = ""
 
 f = open("logfile.txt", "a+")
 #--- comment on new posts, hide from /new ---#
@@ -33,7 +35,7 @@ for p in r.subreddit('MurderedByWords').new():
     if time.time() - p.created_utc > 86400: break
    # linktitle = p.title.lower()
    # if any(string in linktitle for string in poltags): p.mod.flair(text='pol')
-    c = p.reply(commentText + footer + '['+actionID+']('+lp.permalink+')')
+    c = p.reply(commentText + specialNotice + footer + '['+actionID+']('+lp.permalink+')')
     c.mod.distinguish(how='yes', sticky=True)
     c.save()
 #--- kd module not working yet ---#
@@ -68,6 +70,7 @@ time.sleep(10)
 #--- Sort through previously made comments, flair/edit accordingly. ---#
 for c in r.redditor('murderedbybots').saved():
     currentComment = c.body[:-15]
+    print currentComment
     actionID = uniqid()
     print(c.parent().permalink)
     if time.time() - c.created_utc > 423000:
@@ -83,7 +86,7 @@ for c in r.redditor('murderedbybots').saved():
         if currentComment != murderComment + footer:
             lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '" as murder', url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
-            c.edit(murderComment + footer + '['+actionID+']('+lp.permalink+')')
+            c.edit(murderComment + specialNotice + footer + '['+actionID+']('+lp.permalink+')')
             c.parent().mod.flair(text='Murder', css_class='murder')
             f.write('\nFlaired post ' + c.parent().permalink + ' as Murder - ' + actionID)
             lp.mod.approve()
@@ -94,7 +97,7 @@ for c in r.redditor('murderedbybots').saved():
         if currentComment != burnComment + footer:
             lp = r.subreddit('murderedbylogs').submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '" as burn', url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
-            c.edit(burnComment + footer + '['+actionID+']('+lp.permalink+')')
+            c.edit(burnComment + specialNotice + footer + '['+actionID+']('+lp.permalink+')')
             c.parent().mod.flair(text='Burn', css_class='burn');
             f.write('\nFlaired post ' + c.parent().permalink + ' as Burn - ' + actionID)
             lp.mod.approve()
