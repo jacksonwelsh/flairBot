@@ -20,9 +20,13 @@ burnComment = commentText + '\n\nThis post has successfully been marked as a `Bu
 murderComment = commentText + '\n\nThis post has successfully been marked as a `Murder`. This *can* still change, depending on votes.'
 # contentBanText = '#Be advised, if this post has content relating to nra/guns/school shooting you will be banned for 14 days.  \nPlease remove your post if it falls into these categories and no action will be taken. :)'
 footer = "\n\n---\nIf you want to talk about the subreddit, feel free to send us a message in [our official Discord server](https://discord.gg/Fe3eUb6)!\n\n^[faq](https://www.reddit.com/r/1442dump/wiki/murderedbybots-faq) ^| ^[source](https://github.com/jackson1442/redditBot) ^| ^action ^#"
+mods = "\n---\nWe are currently accepting applications for moderators. Please see [this announcement](https://redd.it/82u13q) for more details!"
+voting = "\n\nWe're also gathering feedback on whether policial content should be allowed. [click here](http://redditpoll.com/vote/n2q3CjzW) to vote **yes**. [Click here](http://redditpoll.com/vote/5mj8Cy5K) to vote **no**."
 
 if time.time() < 1520812799:
-    specialNotice = "\n---\nWe are currently accepting applications for moderators. Please see [this announcement](https://redd.it/82u13q) for more details!"
+    specialNotice = mods + voting
+elif time.time() < 1521417599:
+    specialNotice = voting
 else:
     specialNotice = ""
 
