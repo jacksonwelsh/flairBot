@@ -15,7 +15,7 @@ murderScore = 30
 burnScore = -30
 modAlert = -80
 clearComment = 80
-commentText = '''**Upvote this comment if the post is a Murder. Downvote this comment if it is a Burn.\n\nIf this post needs moderator attention, please report this post.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=Please include the action number for reference.)*\n\n'''
+commentText = '''Upvote this comment if the post is a **Murder**. Downvote this comment if it is a **Burn**.\n\nIf this post needs moderator attention, please **report** this post.\n\n*^^I'm ^^a ^^bot, ^^and ^^this ^^action ^^was ^^performed ^^automatically. ^^If ^^you ^^have ^^any ^^questions, ^^please [^^contact ^^the ^^moderators ^^of ^^this ^^subreddit.](https://www.reddit.com/message/compose?to=%2Fr%2FMurderedByWords&subject=&message=Please include the action number for reference.)*\n\n'''
 burnComment = commentText + '\n\nThis post has successfully been marked as a `Burn`. This *can* still change, depending on votes.'
 murderComment = commentText + '\n\nThis post has successfully been marked as a `Murder`. This *can* still change, depending on votes.'
 # contentBanText = '#Be advised, if this post has content relating to nra/guns/school shooting you will be banned for 14 days.  \nPlease remove your post if it falls into these categories and no action will be taken. :)'
