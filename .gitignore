@@ -7,3 +7,5 @@ kdapi/
 !/.gitignore
 !botconfig.ini
 !samplelogin.ini
+autoresponder.py
+autoreslauncher.sh
