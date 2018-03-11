@@ -53,6 +53,11 @@ footer = Config.get("basics", 'footer').decode("string-escape")
 notice1 = Config.get("notices", 'message 1').decode("string-escape")
 notice2 = Config.get("notices", 'message 2').decode("string-escape")
 
+override = Config.getboolean("flairing", "override")
+overrideClassA = Config.get("flairing", "override class a")
+overrideClassB = Config.get("flairing", "override class b")
+
+
 if time.time() < Config.getint("notices", "timestamp 1"):
     specialNotice = notice1
 else:
