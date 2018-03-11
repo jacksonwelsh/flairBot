@@ -121,7 +121,7 @@ for c in r.redditor(accountName).saved():
 
         if c.score > removeA: c.delete()
 
-    elif c.score < scoreA:
+    elif c.score < scoreB:
         if currentComment != commentB + footer[-1]:
             lp = r.subreddit(logsub).submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '"... as ' + nameB, url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
