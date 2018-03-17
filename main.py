@@ -81,7 +81,7 @@ for p in r.subreddit(currentSubreddit).new():
     c.clear_vote()
     lp.mod.approve()
 #--- check for unapproved posts ---#
-if Config.getboolean("approval", "required"):
+if Config.getboolean("approval", "required") == 'yes':
     for u in r.subreddit(currentSubreddit).mod.unmoderated():
         if u.score > Config.getint("approval", "threshold"):
             link = u.permalink
