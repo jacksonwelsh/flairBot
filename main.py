@@ -1,7 +1,7 @@
 #---            Official /r/MurderedByWords bot by /u/jackson1442           ---#
-# You are free to use any or all of the content of this bot for your own
-# pursposes. You are not required to attrubite this work to me. See more cool
-# stuff with extremely specific applications at github.com/jackson1442
+# This bot is now licensed with the MIT license. See the licensefile for more
+# details. See more cool stuff with extremely specific applications at
+# github.com/jackson1442
 import praw, time, ConfigParser
 
 Config = ConfigParser.ConfigParser()
