@@ -33,6 +33,6 @@ Alright! Now that the bot is universalized, we can get the show on the road!
     * Add your bot account as a developer
     * Inset the public and secret keys into `praw.ini`.
     * Insert your username and password into `praw.ini`. (you can't have 2FA on)
-    * **DO NOT UPLOAD CONFIG.INI TO THE INTERNET, NOW OR EVER!!!** Keep this stored locally.
+    * **DO NOT UPLOAD PRAW.INI TO THE INTERNET, NOW OR EVER!!!** Keep this stored locally. If on github, add it to you `.gitignore`.
 
 5. Run it! The main file is main.py, it'll create a log for you. Based on your system, you can set it as a scheduled job to run main.py every x minutes. For cron on linux systems, you'll want to use launcher.sh.
