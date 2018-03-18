@@ -1,4 +1,4 @@
-# redditBot
+# flairBot
 
 A reddit bot created to help moderate subreddits, incorporating auto-flairing, commenting, and required approvals.
 
