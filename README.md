@@ -1,4 +1,4 @@
-# redditBot
+# flairBot
 
 A reddit bot created to help moderate subreddits, incorporating auto-flairing, commenting, and required approvals.
 
@@ -22,7 +22,7 @@ Alright! Now that the bot is universalized, we can get the show on the road!
 
 1. Clone the repo. Simply type `git clone https://github.com/jackson1442/redditBot` where you want this directory.
 
-2. Open `botconfig.ini`. Change all the values in there to what you want them to be. If you need something to be blank (like special notices), just put in `\n`in the blank. **Do not leave fields blank!**
+2. Open `config.py`. Fill in all of the responses. Enter `\n` for any text, comment, etc that you do not wish to enable. **Do not leave fields blank!**
 
 3. Then, after all that is done, change the file name of `samplelogin.ini` to `praw.ini`.
 
@@ -32,7 +32,7 @@ Alright! Now that the bot is universalized, we can get the show on the road!
     * Set the redirect url to `http://127.0.0.1`
     * Add your bot account as a developer
     * Inset the public and secret keys into `praw.ini`.
-    * Insert your username and password into `praw.ini`. (you can't have 2FA on)
-    * **DO NOT UPLOAD PRAW.INI TO THE INTERNET, NOW OR EVER!!!** Keep this stored locally. If on github, add it to you `.gitignore`.
+    * Insert your (the bot's) username and password into `praw.ini`. (you can't have 2FA on)
+    * **DO NOT UPLOAD PRAW.INI TO THE INTERNET, NOW OR EVER!!!** Keep this stored locally. If on github, add it to your `.gitignore`.
 
-5. Run it! The main file is main.py, it'll create a log for you. Based on your system, you can set it as a scheduled job to run main.py every x minutes. For cron on linux systems, you'll want to use launcher.sh.
+5. Run it! The main file is main.py, it'll create a log for you. Based on your system, you can set it as a scheduled job to run main.py every x minutes. For cron on linux systems, you'll want to use launcher.sh, modified for your directory structure.
