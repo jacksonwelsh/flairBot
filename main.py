@@ -49,7 +49,7 @@ classA = Config.get("flairing", 'flair a class')
 nameB = Config.get("flairing", 'flair b name')
 classB = Config.get("flairing", 'flair b class')
 
-footer = Config.get("basics", 'footer').decode("string-escape")
+footer = Config.get("basics", 'footer').decode("string-escape") + '\n\n^bot ^by ^jackson1442 ^| ^[faq](https://jackson1442.github.io/flairbot/#faq) ^| ^[source](https://github.com/jackson1442/redditBot) ^| ^action ^#'
 notice1 = Config.get("notices", 'message 1').decode("string-escape")
 notice2 = Config.get("notices", 'message 2').decode("string-escape")
 
