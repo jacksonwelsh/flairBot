@@ -24,7 +24,7 @@ def getstring(section):
 
 accountName = Config.get("basics", 'account name')
 # import kdapi
-r = praw.Reddit('murderedbybots', user_agent="trying this garbage again")
+r = praw.Reddit(accountName, user_agent="trying this garbage again")
 # poltags = ['[pol]', '[political]', '[politics]', '[politician]']
 
 def uniqid():
