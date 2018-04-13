@@ -103,11 +103,12 @@ time.sleep(10)
 #--- Sort through previously made comments, flair/edit accordingly. ---#
 for c in r.redditor(accountName).saved():
     currentComment = c.body.split('#')[0]
-    print currentComment
     actionID = uniqid()
     print(c.parent().permalink)
     if time.time() - c.created_utc > 423000:
         c.parent().mod.flair(text=nameB, css_class=classB)
+	c.parent().mod.approve()
+	print('removed comment id ' + c.permalink + ' because of oldeness')
         r.subreddit(logsub).submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '" as ' + nameB + ' (auto-old)', url='https://reddit.com' + c.parent().permalink).mod.lock()
         c.delete()
         continue
@@ -116,10 +117,11 @@ for c in r.redditor(accountName).saved():
     if c.parent().author == '[deleted]': c.delete(); continue
 
     if c.score > scoreA:
-        if currentComment != commentA + footer[-1]:
+        if currentComment != commentA + specialNotice + footer[:-1]:
             lp = r.subreddit(logsub).submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '"... as ' + nameA, url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
             c.edit(commentA + specialNotice + footer + '['+actionID+']('+lp.permalink+')')
+	    print('edited comment ' + c.permalink)
             c.parent().mod.flair(text=nameA, css_class=classA)
             f.write('\nFlaired post ' + c.parent().permalink + ' as ' + nameA + ' - ' + actionID)
             lp.mod.approve()
@@ -127,10 +129,11 @@ for c in r.redditor(accountName).saved():
         if c.score > removeA: c.delete()
 
     elif c.score < scoreB:
-        if currentComment != commentB + footer[-1]:
+        if currentComment != commentB + specialNotice + footer[:-1]:
             lp = r.subreddit(logsub).submit(actionID + ' - Flaired post "' + c.parent().title[:50] + '"... as ' + nameB, url='https://reddit.com' + c.parent().permalink)
             lp.mod.lock()
             c.edit(commentB + specialNotice + footer + '['+actionID+']('+lp.permalink+')')
+	    print('edited comment id ' + c.permalink)
             c.parent().mod.flair(text=nameB, css_class=classB);
             f.write('\nFlaired post ' + c.parent().permalink + ' as ' + nameB + ' - ' + actionID)
             lp.mod.approve()
